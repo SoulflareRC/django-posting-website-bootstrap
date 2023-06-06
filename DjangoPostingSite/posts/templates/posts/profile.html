@@ -48,7 +48,7 @@
                         {% include "posts/partial/posts/posts_card_list.html" with posts=profile_posts %}
                     </div>
                     <div class="rounded tab-pane  " id="tab1">
-                        {% include "posts/partial/comments/comments_list.html" with comments=profile.comment_comments.all %}
+                        {% include "posts/partial/comments/comments_list.html" with comments=profile.comment_comments.all|dictsortreversed:"submit_date" %}
                     </div>
                     <div class="rounded tab-pane  " id="tab2">
                         {% include "posts/partial/posts/posts_card_list.html" with posts=profile.saved_posts.all %}

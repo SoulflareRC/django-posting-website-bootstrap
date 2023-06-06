@@ -18,19 +18,23 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
+from django.shortcuts import redirect
 from . import views
+import fluent_comments.urls
+import fluent_comments.templatetags.fluent_comments_tags
 urlpatterns = [
-    # path("admin/", admin.site.urls),
-    #
-    # path("accounts/", include('allauth.urls')),
-    #
-    # path("blog/comments/",include('fluent_comments.urls')), # disable this for fluent blogs
-    #
-    # path("martor/",include("martor.urls")),
-    # path("api/uploader/",views.markdown_uploader,name="markdown_uploader_page"),
-    #
-    #
-    # path("posts/",include("posts.urls"))
+    path("admin/", admin.site.urls),
+
+    path("accounts/", include('allauth.urls')),
+
+    path("blog/comments/",include('fluent_comments.urls')), # disable this for fluent blogs
+
+    path("martor/",include("martor.urls")),
+    path("api/uploader/",views.markdown_uploader,name="markdown_uploader_page"),
+
+
+    path("posts/",include("posts.urls")),
+    path("",lambda request:redirect('posts:index')) # redirect to post index page
 
 ]
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

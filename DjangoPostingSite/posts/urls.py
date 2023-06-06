@@ -21,6 +21,7 @@ urlpatterns = [
     path("profile/<int:pk>", views.ProfileUpdateView.as_view(), name="profile"),
     path('tags/', views.TagsView.as_view(), name="tags"),
     path('search/', views.SearchView.as_view(), name="search"),
+    path('contact/',views.ContactView.as_view(),name="contact"),
     # # ---- drf apis -----
     path('api/',include(router.urls)),
 

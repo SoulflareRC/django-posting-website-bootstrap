@@ -1,4 +1,5 @@
 {% load i18n %}
+
 <div {% if preview %} id="comment-preview"{% else %} id="c{{ comment.id }}"{% endif %} class="comment-item">
  {% block comment_item %}
    {% if preview %}<h3>{% trans "Preview of your comment" %}</h3>{% endif %}
@@ -7,16 +8,24 @@
               <div class="col-2  d-flex flex-column" style="">
                 {% include 'posts/partial/profile/profile_icon.html' with user=comment.user %}
               </div>
-              <div class="col-10 d-flex flex-column ">
-                  <div>
-                      <h4 class="">
-                       {% block comment_title %}
+              <div class="col-10 d-flex flex-column position-relative ">
+                  <div class="position-relative">
 
+                      {% with user=request.user %}
+                          {% if user.is_authenticated  and user == comment.user %}
+                              <div class="position-absolute end-0 top-0 text-sm-end z-3">
+                              {% include 'posts/partial/comments/comment_action_menu.html' with comment=comment user=user %}
+                               </div>
+                          {% endif %}
+                      {% endwith %}
+                      <h4 class="w-100">
+                       {% block comment_title %}
                           <a href="{ url 'posts:user' comment.user.id }" class="text-decoration-none">{% if comment.name %}{{ comment.name }}{% else %}{% trans "Anonymous" %} {% endif %}</a>
 
                          {% if not comment.is_public %}<span class="comment-moderated-flag">({% trans "moderated" %})</span>{% endif %}
                          {% if USE_THREADEDCOMMENTS and not preview %}<a href="#c{{ comment.id }}" data-comment-id="{{ comment.id }}" class="comment-reply-link">{% trans "reply" %}</a>{% endif %}
                        {% endblock %}
+
                        </h4>
                   </div>
                  <div class="comment-text">{{ comment.comment|linebreaks }}</div>

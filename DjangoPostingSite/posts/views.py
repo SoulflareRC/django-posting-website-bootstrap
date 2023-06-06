@@ -231,6 +231,8 @@ class SearchView(generic.TemplateView):
         return context
     def get(self, request:HttpRequest, *args, **kwargs):
         return super(SearchView, self).get( request, *args, **kwargs)
+class ContactView(generic.TemplateView):
+    template_name = "posts/contact.html"
 
 '''DRF API views'''
 class PostsAPIView(viewsets.ModelViewSet):

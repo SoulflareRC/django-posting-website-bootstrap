@@ -21,6 +21,10 @@
               {% url 'posts:ranking' as link %}
               {% include 'posts/partial/navbar/icon_link.html' with link=link  text="Ranking" icon_class="bi-list-ol" only %}
           </li>
+            <li class="nav-item m-2 ">
+              {% url 'posts:contact' as link %}
+              {% include 'posts/partial/navbar/icon_link.html' with link=link  text="Contact" icon_class="bi-person-vcard" only %}
+           </li>
         </ul>
           {% include 'posts/partial/search/search_bar.html' %}
       </div>

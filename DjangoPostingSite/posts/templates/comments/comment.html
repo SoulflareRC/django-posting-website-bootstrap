@@ -1,0 +1,30 @@
+{% load i18n %}
+<div {% if preview %} id="comment-preview"{% else %} id="c{{ comment.id }}"{% endif %} class="comment-item">
+ {% block comment_item %}
+   {% if preview %}<h3>{% trans "Preview of your comment" %}</h3>{% endif %}
+   <div class="w-100 h-100 bg mx-auto border" >
+      <div class="row w-100 h-100 mx-auto position-relative" >
+              <div class="col-2  d-flex flex-column" style="">
+                {% include 'posts/partial/profile/profile_icon.html' with user=comment.user %}
+              </div>
+              <div class="col-10 d-flex flex-column ">
+                  <div>
+                      <h4 class="">
+                       {% block comment_title %}
+
+                          <a href="{ url 'posts:user' comment.user.id }" class="text-decoration-none">{% if comment.name %}{{ comment.name }}{% else %}{% trans "Anonymous" %} {% endif %}</a>
+
+                         {% if not comment.is_public %}<span class="comment-moderated-flag">({% trans "moderated" %})</span>{% endif %}
+                         {% if USE_THREADEDCOMMENTS and not preview %}<a href="#c{{ comment.id }}" data-comment-id="{{ comment.id }}" class="comment-reply-link">{% trans "reply" %}</a>{% endif %}
+                       {% endblock %}
+                       </h4>
+                  </div>
+                 <div class="comment-text">{{ comment.comment|linebreaks }}</div>
+                  <div class="text-sm-end text-secondary "><span class="comment-date">{% blocktrans with submit_date=comment.submit_date %}on {{ submit_date }}{% endblocktrans %}</span></div>
+              </div>
+      </div>
+   </div>
+
+
+ {% endblock %}
+</div>

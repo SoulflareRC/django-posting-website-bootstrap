@@ -1,0 +1,8 @@
+<div class="post-tag badge m-1 p-2 shadow">
+    <a class="text-light fs-7 text-decoration-none" href="{% url 'posts:index' %}?tag={{tag.name}}">
+        {{tag}}
+        {% if show_count %}
+            {{tag.num_times}}
+        {% endif %}
+    </a>
+</div>

@@ -1,0 +1,7 @@
+1. root only stores base.html and page level templates
+2. layout stores partially filled layouts, can have inherit and include relationships
+3. global has global things such as js and css, only included by base.html
+4. partial has widgets, partial widgets, etc.
+    furthermore, widgets with similar functionalities should go into a single folder
+
+

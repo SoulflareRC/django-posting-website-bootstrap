@@ -1,0 +1,28 @@
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'posts:index' %}">Soulflare</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+          <li class="nav-item m-2 ">
+              {% url 'posts:editor' as link %}
+              {% include 'posts/partial/navbar/icon_link.html' with link=link  text="Make a post" icon_class="bi-pen-fill" only %}
+          </li>
+
+          <li class="nav-item m-2">
+              {% url 'posts:tags' as link %}
+              {% include 'posts/partial/navbar/icon_link.html' with link=link  text="Tags" icon_class="bi-tags-fill" only %}
+          </li>
+
+          <li class="nav-item m-2 ">
+              {% url 'posts:ranking' as link %}
+              {% include 'posts/partial/navbar/icon_link.html' with link=link  text="Ranking" icon_class="bi-list-ol" only %}
+          </li>
+        </ul>
+          {% include 'posts/partial/search/search_bar.html' %}
+      </div>
+    </div>
+  </nav>

@@ -1,0 +1,9 @@
+{% load taggit_templatetags2_tags %}
+{% get_taglist as tags %}
+{% get_tagcloud as tag_cloud for 'posts' %}
+<div id="cloud" class="border rounded" style="height:50vh;" ></div>
+<ul id="tag-cloud" style="display:none;">
+    {% for tag in tag_cloud %}
+        <li data-weight="{{tag.weight}}" data-name="{{tag.name}}">{{tag}}-{{tag.font_size}}</li>
+    {% endfor %}
+</ul>

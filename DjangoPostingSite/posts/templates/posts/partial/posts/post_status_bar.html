@@ -1,0 +1,15 @@
+{% load comments %}
+{% load static %}
+{% load martortags %}
+<div class="d-flex flex-row w-100 justify-content-end">
+    {% if post.private %}
+    <div class="btn badge text-bg-success z-3 m-1" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Only you can see this post">
+      <i class="bi bi-lock"></i> Private
+    </div>
+    {% endif %}
+    {% if post.pinned %}
+    <div class="btn badge text-bg-danger z-3 m-1" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="This post is pinned">
+      <i class="bi bi-pin-angle"></i> Pinned
+    </div>
+    {% endif %}
+</div>

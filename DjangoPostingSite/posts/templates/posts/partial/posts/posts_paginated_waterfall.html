@@ -1,0 +1,7 @@
+  <div class="martor-preview">
+    {% for post in page_obj%}
+      {% include "posts/partial/posts/post_brief.html" with show_cover=True %}
+    {% endfor %}
+
+  </div>
+{% include "posts/partial/pagination.html" %}

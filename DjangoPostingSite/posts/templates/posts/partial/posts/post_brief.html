@@ -1,0 +1,16 @@
+<h1><a class="link-underline-opacity-0" href="{% url 'posts:post' post.id %}">{{ post.title }}</a></h1>
+<p>By: {{post.author}}</p>
+<p>Published at: {{post.publish_date}}</p>
+{% block tags %}
+    <p>
+    {% for tag in post.tags.all %}
+      {% include "posts/partial/tags/tag.html" %}
+    {% endfor %}
+    </p>
+{% endblock %}
+
+{% if post.cover and show_cover %}
+    <img src="{{post.cover.url}}" class="w-100">
+{% endif %}
+
+<hr/>

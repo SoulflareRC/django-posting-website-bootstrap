@@ -1,0 +1,20 @@
+{% if user.is_authenticated %}
+    <div id="profile"  class="border rounded overflow-hidden">
+        <div id="profile-main" style="height:20vh;">
+              <div id="bg"
+                    style="background-image: url({{user.userinfo.profile_bg.url}});" >
+                  <a href="{% url 'posts:user' user.id %}" class="icon-wrap" style="transform: translateY(75%);"><img  src="{{user.userinfo.icon.url}}" alt="No Icon" id="icon"></a>
+              </div>
+              <div id="info">
+                <a href="#" class="text-decoration-none">{{user.userinfo.display_name}}</a>
+              </div>
+        </div>
+        <div id="operate" class="btn-group d-flex flex-row h-25">
+            <a  class="btn btn-primary flex-fill" href="{% url 'posts:index' %}?author={{user.id}}">My posts</a>
+            <a class="btn btn-warning flex-fill" href="{% url 'posts:editor' %}">Make a post</a>
+            <a class="btn btn-success flex-fill" href="{% url 'account_logout' %}">Sign out</a>
+        </div>
+     </div>
+{% else %}
+    {% include 'posts/partial/accounts/login_prompt.html' %}
+{% endif %}

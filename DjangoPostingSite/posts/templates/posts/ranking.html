@@ -1,0 +1,11 @@
+{% extends "posts/layout/layout.html" %}
+{% load static %}
+{% load martortags %}
+
+{% block main %}
+        {% include 'posts/partial/profile/profile_ranking.html' %}
+{% endblock %}
+{% block side %}
+    {% include 'posts/layout/sidebar.html' %}
+{% endblock %}
+

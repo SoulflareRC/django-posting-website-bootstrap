@@ -1,0 +1,26 @@
+{% load customtags %}
+{% get_posts num=5 as posts%}
+<div class="accordion accordion-flush" id="posts-accordion-list">
+  <div class="accordion-item">
+    <h5 class="accordion-header">
+      <button class="accordion-button fw-bold" type="button" >
+        Recent Posts
+      </button>
+    </h5>
+  </div>
+  {% for post in posts %}
+    <div class="accordion-item">
+      <h5 class="accordion-header">
+        <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{post.id}}" aria-expanded="true" aria-controls="collapseOne">
+          {{post.title}}
+        </button>
+      </h5>
+      <div id="collapse-{{post.id}}" class="accordion-collapse collapse" data-bs-parent="#posts-accordion-list">
+        <div class="accordion-body">
+          {% include "posts/partial/posts/post_card.html" %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+</div>

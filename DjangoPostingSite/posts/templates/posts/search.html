@@ -1,0 +1,10 @@
+{% extends "posts/layout/layout.html" %}
+{% load static %}
+{% load martortags %}
+{% block main %}
+    {% include 'posts/partial/search/search_page.html' %}
+{% endblock %}
+{% block side %}
+    {% include 'posts/layout/sidebar.html' %}
+{% endblock %}
+

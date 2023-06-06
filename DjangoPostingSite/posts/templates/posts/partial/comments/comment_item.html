@@ -1,0 +1,18 @@
+{% load comments %}
+{% load customtags %}
+<a href="{% url 'posts:post' comment.object_pk %}"  class="list-group-item  p-2 pb-0 pt-0">
+  <div class="justify-content-between d-flex w-100 fw-light text-sm ">
+      <small class="text-truncate text-body-secondary">{{comment.content_object.title}}</small>
+      <small class="text-body-secondary"> {{comment.submit_date}} </small>
+  </div>
+  <div class="blockquote fw-6  m-0">
+    <span><small>{{comment.comment}}</small>  </span>
+  </div>
+  <div class="blockquote-footer text-sm-end m-0">
+    {% if comment.user_name %}
+      {{comment.user_name}}
+    {% else %}
+      Anonymous
+    {% endif %}
+  </div>
+</a>

@@ -1,0 +1,15 @@
+{% load social_share %}
+<span class="d-none">
+<!--    hidden element to load share urls-->
+    {% post_to_twitter_url "Check this post out!" post %}
+    {% post_to_facebook_url  post %}
+    {% send_email_url "Check this fantastic post out!" post  %}
+    {% post_to_reddit_url "Check this fantastic post out!" post %}
+</span>
+<div class="d-flex flex-row w-100">
+    {% include "posts/partial/posts/post_share_btn.html" with share_link=tweet_url share_icon='<i class="bi bi-twitter"></i>' %}
+    {% include "posts/partial/posts/post_share_btn.html" with share_link=facebook_url share_icon='<i class="bi bi-facebook"></i>' %}
+    {% include "posts/partial/posts/post_share_btn.html" with share_link=reddit_url share_icon='<i class="bi bi-reddit"></i>' %}
+    {% include "posts/partial/posts/post_share_btn.html" with share_link=mailto_url share_icon='<i class="bi bi-envelope"></i>' %}
+
+</div>

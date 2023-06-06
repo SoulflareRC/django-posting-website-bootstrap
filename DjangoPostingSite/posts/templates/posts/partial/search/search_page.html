@@ -1,0 +1,30 @@
+{% load taggit_templatetags2_tags %}
+{% get_taglist as tags %}
+<form class="form-inline text-white d-grid gap-2" action="{% url 'posts:search' %}">
+    <div class="input-group" >
+        <span class="input-group-text">
+            <i class="bi bi-search"></i>
+        </span>
+        <input class="form-control p-1 basicAutoComplete" name="search"  id="search-input" data-ajax-action="/posts/api/posts/" type="search" placeholder="Search" aria-label="Search">
+    </div>
+    <div id="search-results-wrap" class="">
+            <div id="search-results" class="list-group position-absolute z-3">
+<!--            display dynamic search results-->
+            </div>
+    </div>
+
+    <div class="card">
+<!--        show detailed results-->
+        {% if search_results %}
+            {% include 'posts/partial/posts/posts_card_list.html' with posts=search_results card_h='20vh' %}
+        {% else %}
+            No Results
+        {% endif %}
+    </div>
+</form>
+
+
+<a id="search-result-item" class="d-none list-group-item list-group-item-action">
+    <div class="fw-bold">Test title</div>
+<!--    serve as a template for dynamic searching, invisible -->
+</a>

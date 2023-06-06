@@ -1,0 +1,63 @@
+{% extends "posts/base.html" %}
+{% load static %}
+{% load customtags %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="d-grid gap-2 m-2">
+            <div class=" position-relative border rounded bg overflow-hidden justify-content-center d-flex flex-column" style="height:30vh;background-image:url({{profile.userinfo.profile_bg.url}});">
+                <div class="justify-content-center d-flex flex-column h-100 w-100 m-0"
+                    style="background: rgb(0,0,0);
+        background: linear-gradient(0deg, rgba(255,255,255,0.5) 0%, rgba(88,88,105,0.3) 35%, rgba(0,0,0,0.5) 100%);">
+                    <div class=" justify-content-center d-flex flex-column" style="height:30%;">
+                        <a class="icon-wrap h-100 shadow">
+                            <img src="{{profile.userinfo.icon.url}}" >
+                        </a>
+                    </div>
+                    <div class="text-center ">
+                        <a href="#" class="text-decoration-none text-light fs-5">{{profile.userinfo.display_name}}</a>
+                    </div>
+                    <div class="text-center">
+                        <small class="text-light">{{profile.userinfo.slogan}}</small>
+                    </div>
+
+                </div>
+                {% if user.id == profile.id %}
+                <div class="position-absolute top-0 end-0 text-white btn">
+                    <a href="{% url 'posts:profile' user.userinfo.id %}" class="text-white"><i class="text-decoration-none bi bi-pencil-square"></i></a>
+                </div>
+                {% endif %}
+            </div>
+
+<!--            profile tabs-->
+            <div class="overflow-hidden card">
+                <div class="card-header fw-light border">
+                    <ul class="nav nav-pills justify-content-center">
+                      <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab0">
+                          <i class="bi bi-bookshelf"></i> Posts
+                      </a></li>
+                      <li class="nav-item"><a class="nav-link " data-bs-toggle="tab" href="#tab1">
+                          <i class="bi bi-chat-dots"></i> Comments
+                      </a></li>
+                        <li class="nav-item"><a class="nav-link " data-bs-toggle="tab" href="#tab2">
+                            <i class="bi bi-bookmarks"></i> Saved
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="tab-content responsive">
+                    <div class="rounded tab-pane active" id="tab0">
+                        {% include "posts/partial/posts/posts_card_list.html" with posts=profile_posts %}
+                    </div>
+                    <div class="rounded tab-pane  " id="tab1">
+                        {% include "posts/partial/comments/comments_list.html" with comments=profile.comment_comments.all %}
+                    </div>
+                    <div class="rounded tab-pane  " id="tab2">
+                        {% include "posts/partial/posts/posts_card_list.html" with posts=profile.saved_posts.all %}
+                    </div>
+
+                </div>
+
+            </div>
+
+    </div>
+
+{% endblock %}

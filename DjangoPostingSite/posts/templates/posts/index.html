@@ -1,0 +1,12 @@
+{% extends "posts/layout/layout.html" %}
+{% load static %}
+{% load martortags %}
+
+{% block main %}
+    {# include 'posts/partial/posts/posts_paginated_waterfall.html' #}
+    {% include 'posts/partial/posts/posts_card_grids.html' %}
+{% endblock %}
+{% block side %}
+    {% include 'posts/layout/sidebar.html' %}
+{% endblock %}
+

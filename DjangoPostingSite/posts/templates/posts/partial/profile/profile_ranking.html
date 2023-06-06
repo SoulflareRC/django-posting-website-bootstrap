@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="card-header text-center p-3 text-light"
+        style="background-image:url(/media/ranking_bg.jpg);
+                background-size:cover;background-position:center;
+                "
+                >
+        <h2>Authors</h2>
+    </div>
+    <div class="card-body">
+        <div id="user-order-radio" class="row w-100 d-flex flex-row">
+            <p>
+                <span class="text-secondary">Order by: </span>
+<!--                <span class="btn-group" role="group">-->
+<!--&lt;!&ndash;                  <a class="btn btn-outline-primary active"  data-bs-toggle="tab" href="#tab0">Published</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <a class="btn btn-outline-primary"  data-bs-toggle="tab" href="#tab1">Saved</a>&ndash;&gt;-->
+<!--                                          <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab0">-->
+<!--                          <i class="bi bi-bookshelf"></i> Posts-->
+<!--                      </a></li>-->
+<!--                      <li class="nav-item"><a class="nav-link " data-bs-toggle="tab" href="#tab1">-->
+<!--                          <i class="bi bi-chat-dots"></i> Comments-->
+<!--                      </a></li>-->
+<!--                </span>-->
+                    <span class="nav btn-group justify-content-center">
+                      <a class="btn btn-outline-primary nav-item active" data-bs-toggle="tab" href="#tab0">
+                          Published
+                      </a>
+                      <a class="btn btn-outline-primary nav-item" data-bs-toggle="tab" href="#tab1">
+                          Saved
+                      </a>
+                    </span>
+            </p>
+        </div>
+        <div class="tab-content responsive">
+            <div class="rounded tab-pane active" id="tab0">
+                {% include 'posts/partial/profile/profile_ranking_grid.html' with profiles=published_profiles order_by='published' %}
+            </div>
+            <div class="rounded tab-pane  " id="tab1">
+                {% include 'posts/partial/profile/profile_ranking_grid.html' with profiles=saved_profiles order_by='saved' %}
+            </div>
+        </div>
+<!--        <div id="user-ranking-grid" class="row w-100 border">-->
+<!--            <div class="row row-cols-1 row-cols-md-4 g-6">-->
+<!--            {% for profile in saved_profiles%}-->
+<!--                <div class="col p-1" style="height:20vh;">-->
+<!--                  {% include 'posts/partial/profile/profile_ranking_icon.html' with order_by="saved" %}-->
+<!--                </div>-->
+<!--            {% endfor %}-->
+<!--            </div>-->
+<!--        </div>-->
+
+    </div>
+
+</div>

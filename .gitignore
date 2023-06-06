@@ -1,0 +1,14 @@
+# ignore example data
+**/uploads/ 
+
+**/__pycache__/ 
+
+*.sqlite3 
+
+**/migrations/
+
+*.pyc
+
+config.*
+
+settings.py

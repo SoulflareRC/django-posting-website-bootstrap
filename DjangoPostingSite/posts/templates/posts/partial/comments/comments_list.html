@@ -1,0 +1,8 @@
+
+{% load customtags %}
+
+<div class="list-group list-group-flush">
+  {% for comment in comments %}
+    {% include 'posts/partial/comments/comment_item.html' %}
+  {% endfor %}
+</div>

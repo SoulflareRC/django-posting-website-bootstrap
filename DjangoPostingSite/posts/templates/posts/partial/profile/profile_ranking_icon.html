@@ -1,0 +1,15 @@
+            <div class="position-relative border rounded bg  justify-content-center d-flex flex-column" style="height:20vh;background-image:url({{profile.profile_bg.url}});">
+                <div class="justify-content-center d-flex flex-column h-100 w-100 m-0"
+                    style="background: rgb(0,0,0);
+        background: linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(88,88,105,0.3) 35%, rgba(255,255,255,0.5) 100%);">
+                    <div class=" justify-content-center d-flex flex-column" style="height:30%;">
+                        <div class="icon-wrap h-100 shadow"
+                        style="background-image:url( {{profile.icon.url}} );background-size:cover; background-position:center;">
+                        </div>
+                    </div>
+                    <a href="{% url 'posts:user' user.id %}" class="stretched-link text-center text-decoration-none text-light  fs-6">{{profile.display_name}}</a>
+                    <span class="mx-auto badge  bg-primary">
+                         {% if order_by == 'published' %}{{profile.published_count}}{% else %}{{profile.saved_count}}{% endif %} {{order_by}}
+                    </span>
+                </div>
+            </div>

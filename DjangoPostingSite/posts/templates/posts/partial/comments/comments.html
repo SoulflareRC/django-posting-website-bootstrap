@@ -1,0 +1,12 @@
+{% load comments static%}
+{% load crispy_forms_tags %}
+<p><strong>{% get_comment_count for post as comment_count %}{{comment_count}} Comments</strong></p>
+{% if user.is_authenticated and not post.private %}
+    {% render_comment_form for post %}
+{% elif not post.private %}
+    {% include 'registration/login_prompt.html' %}
+{% else %}
+
+{% endif %}
+
+{% render_comment_list for post %}

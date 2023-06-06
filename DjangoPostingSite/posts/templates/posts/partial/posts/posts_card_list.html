@@ -1,0 +1,9 @@
+{% load customtags %}
+<div class="border rounded" id="recent-posts">
+    {% for post in posts %}
+    <div style="height:{{card_h|default:'20vh'}};">
+<!--        card height defaults to 20vh unless set-->
+        {% include "posts/partial/posts/post_card.html" %}
+    </div>
+    {% endfor %}
+</div>

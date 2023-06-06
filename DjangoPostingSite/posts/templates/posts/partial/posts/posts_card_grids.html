@@ -1,0 +1,9 @@
+{% load customtags %}
+<div class="martor-preview row row-cols-1 row-cols-md-2 g-6">
+    {% for post in page_obj%}
+        <div class="col p-1" style="height:30vh;">
+          {% include 'posts/partial/posts/post_card.html' %}
+        </div>
+    {% endfor %}
+</div>
+{% include "posts/partial/pagination.html" %}

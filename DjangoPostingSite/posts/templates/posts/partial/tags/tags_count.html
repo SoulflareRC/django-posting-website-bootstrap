@@ -1,0 +1,19 @@
+{% load taggit_templatetags2_tags %}
+{% get_taglist as tags %}
+<div class="card">
+    <div class="card-body">
+        <h3 class=" text-center p-2">
+            <span class="m-auto">
+                <i class="bi bi-tag-fill"></i>Tags
+            </span>
+        </h3>
+        <div class="d-flex flex-row flex-wrap p-2">
+            {% for tag in tags %}
+                {% include 'posts/partial/tags/tag2.html' with tag=tag show_count=True %}
+            {% endfor %}
+        </div>
+        <div class="p-2">
+            {% include 'posts/partial/tags/tag_search.html' %}
+        </div>
+    </div>
+</div>

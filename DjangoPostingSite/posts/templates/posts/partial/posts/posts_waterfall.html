@@ -1,0 +1,5 @@
+  <div class="martor-preview">
+    {% for post in posts%}
+      {% include "posts/partial/posts/post_brief.html" with show_cover=True %}
+    {% endfor %}
+  </div>

@@ -1,0 +1,23 @@
+{% load martortags %}
+
+<div class="post-card card text-bg-dark overflow-hidden border w-100 h-100">
+  <div class="position-absolute w-100">{% include 'posts/partial/posts/post_status_bar.html' %}</div>
+  <img src="
+    {% if post.cover %}
+      {{post.cover.url}}
+    {% endif %}" class="post-card-bg card-img object-fit-cover h-100" alt="..." style="margin:auto;">
+  <div class="card-img-overlay bg-dark p-2" style="--bs-bg-opacity: .5;">
+    <div class="position-absolute bottom-0">
+      <p class="fw-light card-text">
+        <span class=""><strong class="fw-bold">{{post.title}}</strong></span>
+        <div class="d-flex flex-row">
+          {% for tag in post.tags.all %}
+            {% include 'posts/partial/tags/tag.html' %}
+          {% endfor %}
+        </div>
+        <span></span><small>Last updated {{post.publish_date}} by {{post.author.userinfo.display_name}}</small></span>
+      </p>
+    </div>
+    <a class="stretched-link" href="{% url 'posts:post' post.id %}"></a>
+  </div>
+</div>

@@ -171,7 +171,7 @@ class IndexView(generic.ListView):
     model = models.Post
     context_object_name = "posts"
     ordering = "-publish_date"
-    paginate_by = 4
+    paginate_by = 6
     def get_queryset(self):
         # query_set = super(IndexView, self).get_queryset()
         if self.request.user.is_authenticated:

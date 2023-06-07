@@ -9,8 +9,11 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ['title','author','private','pinned','publish_date']
 class UserInfoAdmin(admin.ModelAdmin):
     list_display = ['user']
+class SiteInfoAdmin(admin.ModelAdmin):
+    pass
 # class MyCommentsAdmin(CommentsAdmin):
 #     list_display = ['name', 'content_type', 'object_pk', 'ip_address', 'submit_date', 'is_public', 'is_removed']
 
 admin.site.register(models.Post,PostAdmin)
 admin.site.register(models.UserInfo,UserInfoAdmin)
+admin.site.register(models.SiteInfo,SiteInfoAdmin)

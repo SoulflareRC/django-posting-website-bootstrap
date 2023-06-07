@@ -2,7 +2,7 @@ from django.db.models.signals import post_save,pre_save
 from django.dispatch import receiver
 import uuid
 from django.conf import settings
-from pathlib import Path
+from pathlib import Path,WindowsPath
 from martor.models import MartorField
 from django.contrib.auth.models import *
 from taggit.managers import TaggableManager
@@ -11,6 +11,10 @@ from django_comments.templatetags.comments import *
 from django.contrib.contenttypes.fields import GenericRelation
 # Create your models here.
 from django.shortcuts import reverse
+
+def default_image_folder():
+    return str(settings.DEFAULT_IMAGE_FOLDER)
+
 class PostManager(models.Manager):
     def visible_to_user(self,user):
         queryset = self.get_queryset()
@@ -25,11 +29,10 @@ class Post(models.Model):
     post_id = models.UUIDField(default=uuid.uuid4,editable=False)
     title = models.CharField(max_length=50)
     author = models.ForeignKey(User,on_delete=models.CASCADE,default=1)
-    cover_default_dir = Path(settings.MEDIA_ROOT / 'covers' / 'defaults')
+    # cover_default_dir = Path(settings.MEDIA_ROOT / 'covers' / 'defaults')
     cover = models.ImageField(blank=False,null=False,
                               upload_to= settings.MEDIA_ROOT / 'covers',
-                              # default= random.choice([x.resolve() for x in cover_default_dir.iterdir()])
-                              default='default.png'
+                              default= default_image_folder()+"/post_cover_default.png"
                               )
     content = MartorField()
     publish_date = models.DateTimeField(auto_now=True)
@@ -58,8 +61,27 @@ class UserInfo(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     display_name = models.CharField(max_length=50,blank=False,null=False,default="None")
     slogan = models.CharField(max_length=200,blank=True)
-    icon = models.ImageField(max_length=500, blank=True,upload_to=settings.MEDIA_ROOT / 'user' / 'icon',default='default_icon.png')
-    profile_bg = models.ImageField(max_length=500, blank=True,upload_to=settings.MEDIA_ROOT / 'user' / 'profile_background',default='default_bg.png')
+    icon = models.ImageField(max_length=500, blank=True,
+                             upload_to=settings.MEDIA_ROOT / 'user' / 'icon',
+                             default='icon_default.png')
+    profile_bg = models.ImageField(max_length=500, blank=True,
+                                   upload_to=settings.MEDIA_ROOT / 'user' / 'profile_background',
+                                   default=default_image_folder()+"/profile_bg_default.png")
+
+    linked_link = models.URLField(blank=True,null=True)
+    github_link = models.URLField(blank=True,null=True)
+
+
+class SiteInfo(models.Model):
+    site_icon = models.ImageField(max_length=500, blank=True,
+                                  upload_to=settings.MEDIA_ROOT / 'global' / 'site_icon',
+                                  default= default_image_folder()+"/site_icon_default.png" )
+    site_title = models.CharField(max_length=50, blank=True, default="Site")
+    site_contact_bg = models.ImageField(max_length=500,  blank=True,
+                                        upload_to=settings.MEDIA_ROOT / 'global' / 'site_contact' / 'bg',
+                                        default=default_image_folder()+"/site_contact_bg_default.png" )
+    owner = models.ForeignKey(User,on_delete=models.CASCADE)
+
 
 # # assign group(and permission) to staff when a user becomes a staff
 # @receiver(post_save,sender=User)

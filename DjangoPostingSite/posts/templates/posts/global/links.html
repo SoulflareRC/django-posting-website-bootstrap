@@ -3,7 +3,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
-<title>{% block title %}Soulflare{% endblock %}</title>
+<title>{% block title %}{{site_setting.site_title}}{% endblock %}</title>
+<link rel="shortcut icon" href="{{site_setting.site_icon.url}}">
 <link rel="stylesheet" href="{% static 'posts/style.css' %}">
 <link href="{% static 'plugins/css/bootstrap.min.css' %}" type="text/css" media="all" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="{% static 'fluent_comments/css/ajaxcomments.css' %}" />

@@ -2,16 +2,16 @@
 {% block content %}
     <div class="rounded border overflow-hidden"
          style='height:80vh;
-                background-image:url("/media/contact_bg.jpg");' >
+                background-image:url("{{site_setting.site_contact_bg.url}}");' >
         <div class="d-flex flex-column gap-3 justify-content-center h-100 w-100 m-0 text-light text-center"
                     style="background: rgb(0,0,0);
         background: linear-gradient(0deg, rgba(255,255,255,0.5) 0%, rgba(88,88,105,0.3) 35%, rgba(0,0,0,0.5) 100%);">
-            <h1 class="">SoulflareRC</h1>
+            <h1 class="">{{site_setting.owner.userinfo.display_name}}</h1>
             <h5 class="typed"><em></em></h5>
             <div class="d-flex flex-row justify-content-center w-100">
-                <a class="m-2 text-decoration-none text-light"><h2><i class="bi bi-github"></i></h2></a>
-                <a class="m-2 text-decoration-none text-light"><h2><i class="bi bi-linkedin"></i></h2></a>
-                <a class="m-2 text-decoration-none text-light"><h2><i class="bi bi-envelope-fill"></i></h2></a>
+                <a class="m-2 text-decoration-none text-light" href="https://github.com/SoulflareRC"><h2><i class="bi bi-github"></i></h2></a>
+                <a class="m-2 text-decoration-none text-light" href="https://www.linkedin.com/in/ruochong-chen-6b2363265/"><h2><i class="bi bi-linkedin"></i></h2></a>
+                <a class="m-2 text-decoration-none text-light" href="https://mail.google.com/mail/?view=cm&source=mailto&to={{site_setting.owner.email}}"><h2><i class="bi bi-envelope-fill"></i></h2></a>
             </div>
         </div>
     </div>
@@ -20,8 +20,8 @@
 <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
 <script>
     var typed = new Typed('.typed', {
-      strings: ['It takes more courage to catch happiness than tolerating pain.',],
-      typeSpeed: 300,
+      strings: ['<i>{{site_setting.owner.userinfo.slogan}}</i>',],
+      typeSpeed: 50,
     });
  </script>
 {% endblock %}

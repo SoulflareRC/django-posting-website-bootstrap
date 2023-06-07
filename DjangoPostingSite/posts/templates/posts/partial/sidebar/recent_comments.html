@@ -4,7 +4,7 @@
     <div class="card-header bg-dark text-light fw-bold">
         Recent Comments
     </div>
-    {# get_post_comments num=50 as comments#}
+    {# get_post_comments num=5 as comments#}
     {% get_comment_list_all for posts.post as comments%}
-    {% include 'posts/partial/comments/comments_list.html' with comments=comments %}
+    {% include 'posts/partial/comments/comments_list.html' with comments=comments|slice:":5" %}
 </div>

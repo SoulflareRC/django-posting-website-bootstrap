@@ -11,4 +11,4 @@
 
 config.*
 
-settings.py
+.env

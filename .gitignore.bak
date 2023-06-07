@@ -10,3 +10,5 @@
 *.pyc
 
 config.*
+
+settings.py

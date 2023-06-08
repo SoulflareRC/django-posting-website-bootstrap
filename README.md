@@ -1,6 +1,20 @@
 #  django-posting-website
 A post-based forum website based on Django+Bootstrap. 
 ![image](demo/demo.png)
+## Install
+```
+git clone https://github.com/SoulflareRC/django-posting-website-bootstrap.git
+
+cd django-posting-website-bootstrap
+
+pip install -r requirements.txt
+
+python manage.py makemigrations
+
+python manage.py migrate
+
+python manage.py runserver
+```
 
 ## Technical Details
 **Frontend**: [bootstrap 5.3](https://getbootstrap.com/)

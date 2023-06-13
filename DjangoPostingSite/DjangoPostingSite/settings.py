@@ -29,10 +29,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = ['https://f774-120-229-48-157.ngrok-free.app']
+CSRF_TRUSTED_ORIGINS = ['https://f774-120-229-48-157.ngrok-free.app']
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne", # django channels
+
+    "corsheaders", # cors headers
+
     "simpleui",  # admin simple ui
 
     "posts.apps.PostsConfig",  # posts app
@@ -71,6 +77,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
+
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -78,6 +86,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    "corsheaders.middleware.CorsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "DjangoPostingSite.urls"
@@ -239,4 +250,9 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
+# django whitenoise settings
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# django channels settings
+ASGI_APPLICATION = "DjangoPostingSite.asgi.application" # custom asgi app
 

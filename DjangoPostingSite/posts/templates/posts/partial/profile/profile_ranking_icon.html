@@ -7,7 +7,7 @@
                         style="background-image:url( {{profile.icon.url}} );background-size:cover; background-position:center;">
                         </div>
                     </div>
-                    <a href="{% url 'posts:user' user.id %}" class="stretched-link text-center text-decoration-none text-light  fs-6">{{profile.display_name}}</a>
+                    <a href="{% url 'posts:user' profile.user.id %}" class="stretched-link text-center text-decoration-none text-light  fs-6">{{profile.display_name}}</a>
                     <span class="mx-auto badge  bg-primary">
                          {% if order_by == 'published' %}{{profile.published_count}}{% else %}{{profile.saved_count}}{% endif %} {{order_by}}
                     </span>

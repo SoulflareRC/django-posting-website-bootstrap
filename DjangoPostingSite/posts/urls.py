@@ -18,6 +18,7 @@ urlpatterns = [
     path("editor", views.EditorView.as_view(), name="editor"),
     path("post/<int:pk>", views.PostView.as_view(), name="post"),
     path("user/<int:pk>", views.ProfileView.as_view(), name="user"),
+    path("user/<int:pk>/inbox",views.InboxView.as_view(),name="inbox"),
     path("profile/<int:pk>", views.ProfileUpdateView.as_view(), name="profile"),
     path('tags/', views.TagsView.as_view(), name="tags"),
     path('search/', views.SearchView.as_view(), name="search"),

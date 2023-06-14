@@ -108,6 +108,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
 
                 "posts.context_processors.site_settings",
+                "posts.context_processors.messages",
             ],
         },
     },

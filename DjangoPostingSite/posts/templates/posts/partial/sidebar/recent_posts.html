@@ -1,6 +1,10 @@
+{% load customtags %}
 <div class="overflow-hidden card" style="height:25vh;">
     <div class="card-header bg-dark text-light fw-bold">
         Recent Posts
     </div>
-    {% include 'posts/partial/posts/posts_carousel_list.html' %}
+    {%  get_posts_manager as posts_manager %}
+    {% with posts=posts_manager.public|slice:":5" %}
+        {% include 'posts/partial/posts/posts_carousel_list.html' with posts=posts %}
+    {% endwith %}
 </div>

@@ -25,6 +25,8 @@
                 <div class="position-absolute top-0 end-0 text-white btn">
                     <a href="{% url 'posts:profile' user.userinfo.id %}" class="text-white"><i class="text-decoration-none bi bi-pencil-square"></i></a>
                 </div>
+                {% else %}
+
                 {% endif %}
             </div>
 

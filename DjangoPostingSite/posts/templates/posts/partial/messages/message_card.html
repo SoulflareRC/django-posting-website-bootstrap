@@ -1,0 +1,25 @@
+{% load martortags %}
+        <div class="row w-100 mx-auto position-relative rounded p-2
+                    {% if unread_msg_ids and msg.id in unread_msg_ids %}
+                        bg-primary-subtle
+                    {% endif %}
+
+                    " >
+              <div class="col-2  d-flex flex-column justify-content-center" style="">
+                {% include 'posts/partial/profile/profile_icon.html' with user=msg.from_user %}
+                  <a href="{% url 'posts:user' msg.from_user.id %}" class="text-decoration-none text-center w-100">{{msg.from_user.userinfo.display_name}}</a>
+              </div>
+              <div class="col-10 gap-2 d-flex flex-column position-relative rounded border {% if msg.url %}border-primary{% endif %}" style="max-height:20vh;">
+                  <div class="position-relative">
+                      <h4 class="w-100">
+                            {{msg.title}}
+                       </h4>
+                  </div>
+<!--                  <div class="card-text overflow-auto" style="max-height:20vh;">{{ msg.content|safe_markdown }}</div>-->
+                  <div class="card-text overflow-auto" style="max-height:20vh;">{{ msg.content }}</div>
+                  <div class="text-sm-end text-secondary bottom-0"><span class="comment-date"> {{ msg.sent_date }}</span></div>
+                  {% if msg.url %}
+                    <a class="stretched-link" href="{{msg.url}}"></a>
+                  {% endif %}
+              </div>
+        </div>

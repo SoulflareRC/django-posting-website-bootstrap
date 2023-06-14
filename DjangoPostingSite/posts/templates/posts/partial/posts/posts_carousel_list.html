@@ -1,14 +1,8 @@
 {% load customtags %}
 
 <div id="posts-carousel-list" class="carousel slide h-100" data-bs-ride="carousel">
-<!--  <div class="carousel-indicators">-->
-<!--    {% get_posts num=5 as posts%}-->
-<!--    {% for post in posts %}-->
-<!--      <button type="button" class="carousel-control-btn" data-bs-target="#posts-carousel-list" data-bs-slide-to="{{forloop.counter0}}" aria-label="Slide {{forloop.counter0}}"></button>-->
-<!--    {% endfor %}-->
-<!--  </div>-->
+
   <div class="carousel-inner">
-    {% get_posts num=5 as posts%}
     {% for post in posts %}
         <div class="carousel-item" data-bs-interval="2000"  style="height:20vh;">
           {% include 'posts/partial/posts/post_card.html' %}

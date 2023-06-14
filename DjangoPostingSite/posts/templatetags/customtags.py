@@ -18,6 +18,10 @@ def num_range(start,end):
     # this will return a number range
     return range(start,end)
 @register.simple_tag(takes_context=True)
+def get_posts_manager(context,**kwargs):
+    manager = models.Post.objects
+    return manager
+@register.simple_tag(takes_context=True)
 def get_posts(context,**kwargs):
     # simple tags can also return queryset like a variable
     request = context['request']

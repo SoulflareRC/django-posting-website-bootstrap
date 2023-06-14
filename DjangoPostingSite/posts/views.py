@@ -4,9 +4,10 @@ from django.views import generic
 from django.http import *
 
 '''Models '''
-from django.db.models import Count,Sum
+from django.db.models import Count,Sum,Q,Case,When,F,BooleanField,Value
 from django.contrib.auth.models import *
 from django_comments.models import Comment
+from django.contrib import messages
 from taggit.models import Tag
 from . import models
 
@@ -29,21 +30,19 @@ class EditorView(generic.FormView):
         query_post = request.GET.get('post', None)
         # usage: /posts/editor?post=<pk>
         f = self.form_class(request.POST, request.FILES)
-        if query_post:
+        if query_post: # update post
             query_post = int(query_post)
             post = get_object_or_404(models.Post, pk=query_post)
-            f = self.form_class(request.POST,request.FILES,instance=post)
-            if f.is_valid() and post.author==request.user:
-                new_form = f.save()
-                return redirect(reverse('posts:post', kwargs={'pk':new_form.pk}))
+            if post.author==request.user:
+                f = self.form_class(request.POST,request.FILES,instance=post)
+            else:
+                return HttpResponseForbidden("You are not allowed to edit this post.")
         if f.is_valid():# hmm a form must be validated to be saved
             new_form = f.save(commit=False)
             new_form.author = request.user
             f.save()
+
             return redirect(reverse('posts:post', kwargs={'pk': new_form.pk}))
-        else:
-            print("Form INVALID ")
-            print(f.errors)
         return self.get(request,*args,**kwargs)
 
     def get(self, request, *args, **kwargs):
@@ -96,6 +95,24 @@ class ProfileView(generic.DetailView):
             posts = models.Post.objects.visible_to_user(-1)
         posts = posts.filter(author=self.get_object())
         context['profile_posts'] = posts
+        return context
+class InboxView(generic.DetailView):
+    template_name = "posts/inbox.html"
+    model = User
+    context_object_name = 'profile'
+    def get_context_data(self, **kwargs):
+        user = self.get_object()
+        context = super(InboxView, self).get_context_data(**kwargs)
+        user_msgs = models.Message.objects\
+            .filter(Q(to_user=user)|Q(from_user=user))
+        user_new_msgs = user_msgs.filter(to_user=user).filter(read=False)
+        unread_msg_ids = list(user_new_msgs.values_list('id',flat=True))
+        print(unread_msg_ids)
+        user_new_msgs.update(read=True)
+
+        messages.add_message(self.request, messages.INFO, f"You have {len(unread_msg_ids)} unread messages")
+        context["user_msgs"] = user_msgs
+        context["unread_msg_ids"] = unread_msg_ids
         return context
 class PostView(generic.DetailView):
     template_name = "posts/post.html"
@@ -165,6 +182,10 @@ class PostView(generic.DetailView):
         c = request.GET.get('c', None)
         if c:
             return redirect(reverse('posts:post', kwargs={'pk': self.kwargs['pk']}) + f'#c{c}')  # Locate the comment
+        '''Show messages'''
+        if not post.approved:
+            messages.add_message(request,messages.INFO,"Your post is waiting for approval")
+
         return super(PostView, self).get(request, *args, **kwargs)
 class IndexView(generic.ListView):
     template_name = "posts/index.html"

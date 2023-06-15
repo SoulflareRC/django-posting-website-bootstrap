@@ -21,7 +21,7 @@
             {% endif %}
           {% endif %}
           {% if user == post.author %}
-            <a class="dropdown-item" href="{% url 'posts:editor' %}?post={{post.id}} "><i class="bi bi-pencil"></i> Edit</a>
+            <a class="dropdown-item" href="{% url 'posts:post_edit' post.id %} "><i class="bi bi-pencil"></i> Edit</a>
             {% if post.private %}
             <a class="dropdown-item  text-primary" data-bs-toggle="modal" data-bs-target="#privatePostModal"><i class="bi bi-unlock"></i> Set as public</a>
             {% else %}
@@ -68,7 +68,7 @@
       </div>
       <div class="modal-footer">
         <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
-        <a href="{% url 'posts:post' post.id %}?delete=True "  type="button" class="btn btn-danger">Delete</a>
+        <a href="{% url 'posts:post_delete' post.id %} "  type="button" class="btn btn-danger">Delete</a>
       </div>
     </div>
   </div>

@@ -56,6 +56,17 @@ class Post(models.Model):
     objects = PostManager()
     class Meta:
         ordering = ["-pinned","-publish_date","title"]
+        permissions = (
+            # default permissions:add,change,delete,view
+            # ('view_post'), # default view
+            # ('create_post'), # default add
+            # ('delete_post'), # default delete
+            # ('edit_post'),   # default change
+            ('approve_post',"Approve post"),
+            ('pin_post',"Pin post"),
+            ('private_post','Set post as private'),
+            # ('save_post')
+        )
     def __str__(self):
         return self.title
     def get_absolute_url(self):
@@ -67,9 +78,11 @@ class Post(models.Model):
             1. Admin->author: your post is waiting for approval
             2. Author->All staffs: please approve this post
          '''
+
         if self.pk is None:
             print("Post created")
             post = super(Post, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+            add_owner_permission(self, self.author)
             wait_approval(self)
             notify_staff_post(self)
         else:
@@ -157,4 +170,18 @@ class SiteInfo(models.Model):
 #             # User is not staff but in the group, so remove them from the group
 #             instance.groups.remove(group)
 
+# ----Permission utils --------
+# # default permissions:add,change,delete,view
+# other permissions: pin, approve
+from guardian.shortcuts import assign_perm
+
+def add_owner_permission(obj:Post,user):
+    # assign the owner of the object change,delete,view permissions
+    # assign_perm(f'change_{obj}',)
+    print(f"Adding owner permissions to {user} for {obj}")
+    model_name = obj._meta.model_name
+    print("Table name:", model_name)
+    assign_perm(f'change_{model_name}',user,obj)
+    assign_perm(f'delete_{model_name}', user, obj)
+    assign_perm(f'view_{model_name}', user, obj)
 

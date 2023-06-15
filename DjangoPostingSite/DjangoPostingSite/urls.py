@@ -20,6 +20,8 @@ from django.urls import path,include
 from django.conf.urls.static import static
 from django.shortcuts import redirect
 from . import views
+# from allauth.urls import *
+# from allauth.account.urls import *
 import fluent_comments.urls
 import fluent_comments.templatetags.fluent_comments_tags
 urlpatterns = [

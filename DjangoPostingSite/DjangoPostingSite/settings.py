@@ -35,6 +35,8 @@ CSRF_TRUSTED_ORIGINS = ['https://f774-120-229-48-157.ngrok-free.app']
 # Application definition
 
 INSTALLED_APPS = [
+    "guardian", # per object permission
+
     "daphne", # django channels
 
     "corsheaders", # cors headers
@@ -89,6 +91,7 @@ MIDDLEWARE = [
 
     "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+
 ]
 
 ROOT_URLCONF = "DjangoPostingSite.urls"
@@ -198,6 +201,9 @@ AUTHENTICATION_BACKENDS = [
 
     # `allauth` specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
+
+    # # hook django-guardian backend
+    "guardian.backends.ObjectPermissionBackend",
 ]
 SITE_ID = 1
 ACCOUNT_PREVENT_ENUMERATION= False # setting this to false prevents violating the email unique constraints when login with social account!!!
@@ -256,4 +262,3 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # django channels settings
 ASGI_APPLICATION = "DjangoPostingSite.asgi.application" # custom asgi app
-

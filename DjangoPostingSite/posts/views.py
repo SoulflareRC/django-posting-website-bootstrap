@@ -1,5 +1,7 @@
 from django.shortcuts import render,reverse,get_object_or_404,redirect
 '''Views'''
+from guardian.mixins import PermissionRequiredMixin,LoginRequiredMixin
+# from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from django.views import generic
 from django.http import *
 
@@ -14,6 +16,9 @@ from . import models
 '''Forms'''
 from . import forms
 
+'''Decorators'''
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required,permission_required
 
 '''DRF'''
 from . import models,serializers
@@ -22,48 +27,81 @@ from rest_framework.request import Request
 
 class TagsView(generic.TemplateView):
     template_name = "posts/tags_page.html"
-class EditorView(generic.FormView):
-    '''Create & Update post'''
+
+class PostCreateView(LoginRequiredMixin,generic.edit.CreateView):
     template_name = "posts/editor.html"
     form_class = forms.PostForm
-    def post(self, request:HttpRequest, *args, **kwargs):
-        query_post = request.GET.get('post', None)
-        # usage: /posts/editor?post=<pk>
-        f = self.form_class(request.POST, request.FILES)
-        if query_post: # update post
-            query_post = int(query_post)
-            post = get_object_or_404(models.Post, pk=query_post)
-            if post.author==request.user:
-                f = self.form_class(request.POST,request.FILES,instance=post)
-            else:
-                return HttpResponseForbidden("You are not allowed to edit this post.")
-        if f.is_valid():# hmm a form must be validated to be saved
-            new_form = f.save(commit=False)
-            new_form.author = request.user
-            f.save()
-
-            return redirect(reverse('posts:post', kwargs={'pk': new_form.pk}))
-        return self.get(request,*args,**kwargs)
-
+    model = models.Post
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(PostCreateView, self).form_valid(form)
+    def get_success_url(self):
+        return self.object.get_absolute_url()
     def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect(reverse("posts:index"))
-        query_post = request.GET.get('post',None)
-        #usage: /posts/editor?post=<pk>
-        print(query_post)
-        if query_post:
-            query_post = int(query_post)
-            post = get_object_or_404(models.Post,pk=query_post)
-            if request.user != post.author:
-                # return redirect(reverse("posts:post",kwargs={'pk':query_post}))
-                return redirect(reverse("posts:post",kwargs={'pk':query_post}))
-            print(post.content)
-            form = forms.PostForm(instance=post)
-            context = self.get_context_data(**kwargs)
-            context['form'] = form
-            return render(request,self.template_name,context=context)
-        print("Nothing happens")
-        return super(EditorView, self).get(request, *args, **kwargs)
+        print(request.user)
+        return super(PostCreateView, self).get(request, *args, **kwargs)
+class PostEditView(PermissionRequiredMixin, LoginRequiredMixin,generic.edit.UpdateView):
+    permission_required = "change_post"
+    raise_exception = True
+    template_name = "posts/editor.html"
+    form_class = forms.PostForm
+    model = models.Post
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+class PostDeleteView(PermissionRequiredMixin,LoginRequiredMixin, generic.RedirectView,generic.detail.SingleObjectMixin):
+    permission_required = "delete_post"
+    raise_exception = True
+    model = models.Post
+    def get_redirect_url(self, *args, **kwargs):
+        obj = self.get_object()
+        print("Deleted post ",obj)
+        obj.delete()
+        return reverse("posts:index")
+
+# class EditorView(generic.FormView
+#                 ,LoginRequiredMixin
+#                  ):
+#     '''Create & Update post'''
+#     template_name = "posts/editor.html"
+#     form_class = forms.PostForm
+#     def post(self, request:HttpRequest, *args, **kwargs):
+#         query_post = request.GET.get('post', None)
+#         # usage: /posts/editor?post=<pk>
+#         f = self.form_class(request.POST, request.FILES)
+#         if query_post: # update post
+#             query_post = int(query_post)
+#             post = get_object_or_404(models.Post, pk=query_post)
+#             if post.author==request.user:
+#                 f = self.form_class(request.POST,request.FILES,instance=post)
+#             else:
+#                 return HttpResponseForbidden("You are not allowed to edit this post.")
+#         if f.is_valid():# hmm a form must be validated to be saved
+#             new_form = f.save(commit=False)
+#             new_form.author = request.user
+#             f.save()
+#
+#             return redirect(reverse('posts:post', kwargs={'pk': new_form.pk}))
+#         return self.get(request,*args,**kwargs)
+#
+#     def get(self, request, *args, **kwargs):
+#         if not request.user.is_authenticated:
+#             return redirect(reverse("posts:index"))
+#         query_post = request.GET.get('post',None)
+#         #usage: /posts/editor?post=<pk>
+#         print(query_post)
+#         if query_post:
+#             query_post = int(query_post)
+#             post = get_object_or_404(models.Post,pk=query_post)
+#             if request.user != post.author:
+#                 # return redirect(reverse("posts:post",kwargs={'pk':query_post}))
+#                 return redirect(reverse("posts:post",kwargs={'pk':query_post}))
+#             print(post.content)
+#             form = forms.PostForm(instance=post)
+#             context = self.get_context_data(**kwargs)
+#             context['form'] = form
+#             return render(request,self.template_name,context=context)
+#         print("Nothing happens")
+#         return super(EditorView, self).get(request, *args, **kwargs)
 class ProfileUpdateView(generic.UpdateView):
     '''Update userinfo of user'''
     # a bit tricky, since it needs to convert back and forth between userinfo and user.
@@ -120,6 +158,7 @@ class PostView(generic.DetailView):
     context_object_name = "post"
 
     def get(self, request: HttpRequest, *args, **kwargs):
+        print("Request user:",request.user,request.user.pk )
         # delete if parameter specifies delete=True
         post = self.get_object()
         # redirect to index if this post is private

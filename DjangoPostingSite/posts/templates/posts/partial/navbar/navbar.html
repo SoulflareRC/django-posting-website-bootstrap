@@ -8,7 +8,7 @@
         <ul class="navbar-nav mr-auto">
 
           <li class="nav-item m-2 ">
-              {% url 'posts:editor' as link %}
+              {% url 'posts:post_create' as link %}
               {% include 'posts/partial/navbar/icon_link.html' with link=link  text="Make a post" icon_class="bi-pen-fill" only %}
           </li>
 

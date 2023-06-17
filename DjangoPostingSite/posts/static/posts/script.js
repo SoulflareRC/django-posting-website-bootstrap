@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded',function(){
     imagePreview();
     enableTagify();
     enableFilePond();
+    enableMultipleTriggerModal();
 });
 function renderTags(){
     //alert("what");
@@ -112,25 +113,28 @@ function imagePreview(){
 
 function enableTagify(){
     var tag_input = document.querySelector('.tagify');
-    var input_default_val = tag_input.value;
-    console.log(input_default_val);
-    var tag_list = $.getJSON('/posts/api/tags',function(result){
+    if (tag_input != null ){
+        var input_default_val = tag_input.value;
+        console.log(input_default_val);
+        var tag_list = $.getJSON('/posts/api/tags',function(result){
 
-        console.log(result);
-        const tags = result.map(x=>x.name.toLowerCase());
-        var tgf = new Tagify(tag_input,{
-            whitelist : tags,
-            dropdown : {
-                classname     : "color-blue",
-                enabled       : 0,              // show the dropdown immediately on focus
-                maxItems      : 5,
-                position      : "text",         // place the dropdown near the typed text
-                closeOnSelect : false,          // keep the dropdown open after selecting a suggestion
-                highlightFirst: true
-            },
-            originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(' ')
+            console.log(result);
+            const tags = result.map(x=>x.name.toLowerCase());
+            var tgf = new Tagify(tag_input,{
+                whitelist : tags,
+                dropdown : {
+                    classname     : "color-blue",
+                    enabled       : 0,              // show the dropdown immediately on focus
+                    maxItems      : 5,
+                    position      : "text",         // place the dropdown near the typed text
+                    closeOnSelect : false,          // keep the dropdown open after selecting a suggestion
+                    highlightFirst: true
+                },
+                originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(' ')
+            });
         });
-    });
+    }
+
 
 
 }
@@ -146,13 +150,19 @@ function enableFilePond(){
         console.log("File added ",file.file);
     });
 }
-/*
-function searchAjax(endpoint,keyword){
-    console.log("Searching keyword:",keyword);
-    let formData = {'keyword':keyword};
-    $.getJSON(endpoint,formData).done(response=>{
-        console.log(response);
+function enableMultipleTriggerModal(){
+    let triggers = $('.modal-trigger');
+    triggers.each(function(){
+        let target_link =$($(this).data('target-link'));
+        console.log(target_link.attr('href'));
+        $(this).click(function(){
+                console.log("Clicked");
+                let link_pattern = target_link.attr('href');
+                let id = $(this).data('id');
+                let link = link_pattern.replace(/\d+/,id);
+                //alert(link);
+                target_link.attr('href',link);
 
-    });
+        } );
+   });
 }
-*/

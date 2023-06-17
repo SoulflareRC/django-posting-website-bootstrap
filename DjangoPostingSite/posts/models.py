@@ -125,7 +125,7 @@ class UserInfo(models.Model):
                                    upload_to=settings.MEDIA_ROOT / 'user' / 'profile_background',
                                    default=default_image_folder()+"/profile_bg_default.png")
 
-    linked_link = models.URLField(blank=True,null=True)
+    linkedin_link = models.URLField(blank=True,null=True)
     github_link = models.URLField(blank=True,null=True)
 
 

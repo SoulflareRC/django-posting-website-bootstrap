@@ -1,5 +1,5 @@
 from django.urls import path,include
-from posts.views import apis,posts,comments,messages,views
+from posts.views import apis,posts,comments,messages,profiles,views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -24,9 +24,9 @@ urlpatterns = [
     path("post/<int:pk>/pin",posts. PostPinnedToggleView.as_view(),name="post_pin"),
     path("comment/<int:pk>/delete",comments. CommentDeleteView.as_view(),name="comment_delete"),
     path("message/<int:pk>/delete",messages. MessageDeleteView.as_view(),name="msg_delete"),
-    path("user/<int:pk>",  views. ProfileView.as_view(), name="user"),
+    path("user/<int:pk>",  profiles. ProfileView.as_view(), name="user"),
+    path("user/<int:pk>/profile",  profiles. ProfileUpdateView.as_view(), name="profile"),
     path("user/<int:pk>/inbox", views. InboxView.as_view(),name="inbox"),
-    path("user/<int:pk>/profile",  views. ProfileUpdateView.as_view(), name="profile"),
     path('tags/',  views. TagsView.as_view(), name="tags"),
     path('search/',  views. SearchView.as_view(), name="search"),
     path('contact/', views. ContactView.as_view(),name="contact"),

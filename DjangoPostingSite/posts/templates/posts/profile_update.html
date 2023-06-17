@@ -5,14 +5,14 @@
 {% block content %}
     <form class="d-grid gap-2 m-2" method="post" enctype='multipart/form-data' action="">{% csrf_token %}
             <div class=" text-light position-relative border rounded bg overflow-hidden justify-content-center d-flex flex-column" style="height:30vh;">
-                <img src="{{profile.profile_bg.url}}" id="bg-preview" class="w-100 position-absolute " >
+                <img src="{{profile.profile_bg.url}}" id="bg-preview" class="w-100 position-absolute "  >
 
-                <label for="bg-input" class="justify-content-center d-flex flex-column h-100 w-100 m-0 z-2"
+                <label for="bg-input" class="justify-content-center d-flex flex-column h-100 w-100 m-0 z-2" data-bs-toggle="tooltip" data-bs-title="Click to upload image"
                     style="background: rgb(0,0,0);
         background: linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(88,88,105,0.3) 35%, rgba(255,255,255,0.5) 100%);">
                     <div class=" justify-content-center d-flex flex-column" style="height:30%;">
                         <div class="h-100">
-                            <label class="icon-wrap shadow z-3" for="icon-input">
+                            <label class="icon-wrap shadow z-3" for="icon-input" data-bs-toggle="tooltip" data-bs-title="Click to upload image">
                                 <img id="icon-preview" src="{{profile.icon.url}}">
                             </label>
                         </div>
@@ -34,7 +34,29 @@
             </div>
         <input id="bg-input" data-preview-target="#bg-preview" class="d-none img-input-preview" type="file" name="profile_bg">
         <input id="icon-input" data-preview-target="#icon-preview" class="d-none img-input-preview" type="file" name="icon">
-
+        <!--        contact information-->
+        <div class="card">
+            <div class="card-header"
+            ><strong>Contact information <i class="bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Optional contact information"></i></strong></div>
+            <div class="card-body">
+                <table class="table ">
+                <tbody>
+                    <tr>
+                        <th>Github</th>
+                        <td>
+                        <input type="url" {% if profile.github_link %} value="{{profile.github_link}}" {% endif %} name="github_link" class="w-100 mx-auto m-0 p-0 bg-transparent border-bottom border-0 ">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>LinkedIn</th>
+                        <td>
+                        <input type="url" {% if profile.linkedin_linl %} value="{{profile.linkedin_link}}" {% endif %} name="linkedin_link" class="w-100 mx-auto m-0 p-0 bg-transparent border-bottom border-0 ">
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
         <!--        account information-->
         <div class="card">
             <div class="card-header"
@@ -51,7 +73,6 @@
                 </tbody>
                 </table>
             </div>
-
         </div>
     </form>
 

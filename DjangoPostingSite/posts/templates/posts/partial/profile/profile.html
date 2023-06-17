@@ -1,6 +1,6 @@
 {% if user.is_authenticated %}
-    <div id="profile"  class="border rounded overflow-hidden">
-        <div id="profile-main" style="height:20vh;">
+    <div id="profile"  class="d-flex flex-column border rounded overflow-hidden position-relative" style="height:30vh;">
+        <div id="profile-main" class="flex-fill" style="height:25vh;" >
               <div id="bg"
                     style="background-image: url({{user.userinfo.profile_bg.url}});" >
                   <a href="{% url 'posts:user' user.id %}" class="icon-wrap" style="transform: translateY(75%);"><img  src="{{user.userinfo.icon.url}}" alt="No Icon" id="icon"></a>
@@ -9,7 +9,7 @@
                 <a href="#" class="text-decoration-none">{{user.userinfo.display_name}}</a>
               </div>
         </div>
-        <div id="operate" class="btn-group d-flex flex-row h-25">
+        <div id="operate" class=" w-100 text-break btn-group d-flex flex-row bottom-0 position-relative">
             <a  class="btn btn-primary flex-fill" href="{% url 'posts:inbox' user.id %}">
                 Messages
                 {% if unread_msgs|length > 0 %}

@@ -1,0 +1,26 @@
+    <div id="profile"  class="d-flex flex-column border rounded overflow-hidden position-relative" style="">
+        <div id="profile-main" class="flex-fill" style="height:20vh;" >
+              <div id="bg"
+                    style="background-image: url({{user.userinfo.profile_bg.url}});" >
+                  <a href="{% url 'posts:user' user.id %}" class="icon-wrap" style="transform: translateY(75%);"><img  src="{{user.userinfo.icon.url}}" alt="No Icon" id="icon"></a>
+              </div>
+              <div id="info">
+                <a href="#" class="text-decoration-none">{{user.userinfo.display_name}}</a>
+              </div>
+              <div class="text-primary">
+                  <span class="text-dark">{{user.userinfo.slogan}}</span>
+              </div>
+        </div>
+        <div id="operate" class=" w-100 text-break btn-group d-flex flex-row bottom-0 position-relative">
+            <a  class="btn btn-primary flex-fill" href="{% url 'posts:inbox' user.id %}">
+                Messages
+                {% if unread_msgs|length > 0 %}
+                <span class="z-3 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{unread_msgs|length}}
+                </span>
+                {% endif %}
+            </a>
+            <a class="btn btn-warning flex-fill" href="{% url 'posts:post_create' %}">Make a post</a>
+            <a class="btn btn-success flex-fill" href="{% url 'account_logout' %}">Sign out</a>
+        </div>
+     </div>

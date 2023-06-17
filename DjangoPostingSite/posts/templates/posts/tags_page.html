@@ -1,4 +1,4 @@
-{% extends "posts/base.html" %}
+{% extends "posts/layout/layout.html" %}
 {% load static %}
 {% load taggit_templatetags2_tags %}
 {% load martortags %}
@@ -11,11 +11,13 @@
 {% endblock %}
 
 
-{% block content %}
+{% block main %}
     {% include "posts/partial/tags/tags_count.html" %}
     {% include "posts/partial/tags/tag_cloud.html" %}
 {% endblock %}
-
+{% block side %}
+    {% include 'posts/layout/sidebar.html' %}
+{% endblock %}
 
 {% block js %}
  <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>

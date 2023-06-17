@@ -1,0 +1,24 @@
+
+    <div class="position-relative border rounded bg  justify-content-center d-flex flex-column" style="height:20vh;">
+        {% block card_bg %}
+        <div class="bg position-absolute z-1 justify-content-center d-flex flex-column h-100 w-100 m-0"
+            style="background-image:url({{profile.profile_bg.url}});">
+        </div>
+        {% endblock %}
+        <div class="position-absolute z-2 justify-content-center d-flex flex-column h-100 w-100 m-0"
+            style="background: rgb(0,0,0);
+background: linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(88,88,105,0.3) 35%, rgba(255,255,255,0.5) 100%);">
+        </div>
+        {% block card_icon %}
+        <div class="z-3 justify-content-center d-flex flex-column" style="height:30%;">
+            <div class="icon-wrap h-100 shadow"
+            style="background-image:url( {{profile.icon.url}} );background-size:cover; background-position:center;">
+            </div>
+        </div>
+        <a href="{% url 'posts:user' profile.user.id %}" class="z-3 stretched-link text-center text-decoration-none text-light  fs-6">{{profile.display_name}}</a>
+        {% endblock %}
+        {% block card_content %}
+
+        {% endblock %}
+
+    </div>

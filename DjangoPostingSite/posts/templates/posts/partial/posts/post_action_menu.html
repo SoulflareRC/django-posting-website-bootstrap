@@ -9,15 +9,15 @@
           {% if user.is_authenticated %}
             {% if user.is_staff %}
               {% if post.pinned %}
-                  <a class="dropdown-item text-primary" href="?pin=False"><i class="bi bi-pin-angle-fill"></i> Pinned</a>
+                  <a class="dropdown-item text-primary" href="{% url 'posts:post_pin' post.id %}"><i class="bi bi-pin-angle-fill"></i> Pinned</a>
               {% else %}
-                  <a class="dropdown-item" href="?pin=True"><i class="bi bi-pin-angle"></i> Pin</a>
+                  <a class="dropdown-item" href="{% url 'posts:post_pin' post.id %}"><i class="bi bi-pin-angle"></i> Pin</a>
               {% endif %}
             {% endif %}
             {% if post in user.saved_posts.all %}
-              <a class="dropdown-item text-primary" href="?save=False"><i class="bi bi-bookmark-check-fill"></i> Saved</a>
+              <a class="dropdown-item text-primary" href="{% url 'posts:post_save' post.id %}"><i class="bi bi-bookmark-check-fill"></i> Saved</a>
             {% else %}
-              <a class="dropdown-item" href="?save=True"><i class="bi bi-bookmark"></i> Save</a>
+              <a class="dropdown-item" href="{% url 'posts:post_save' post.id %}"><i class="bi bi-bookmark"></i> Save</a>
             {% endif %}
           {% endif %}
           {% if user == post.author %}
@@ -47,7 +47,7 @@
       </div>
       <div class="modal-footer">
         <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
-        <a href="?private={% if post.private %}False{% else %}True{% endif %}"  type="button" class="btn btn-primary">Yes</a>
+        <a href="{% url 'posts:post_private' post.id %}"  type="button" class="btn btn-primary">Yes</a>
       </div>
     </div>
   </div>

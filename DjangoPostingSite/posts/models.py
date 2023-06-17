@@ -90,24 +90,6 @@ class Post(models.Model):
 
             post = super(Post, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
         return post
-@receiver(pre_save,sender=Post)
-def approve_update_signal(sender,instance,**kwargs):
-    '''Notify author that their post is approved when approved updated'''
-    if instance.pk and Post.objects.filter(pk=instance.pk).exists():
-        print("Approve update")
-        prev_instance = Post.objects.get(pk=instance.pk)
-        if prev_instance.approved != instance.approved and instance.approved:
-            notify_approval(instance)
-from fluent_comments.models import FluentComment
-@receiver(post_save,sender=FluentComment)
-def notify_comment_signal(sender,instance,created,**kwargs):
-    if created:
-        print("Comment was created")
-        '''Comment was created'''
-        post = instance.content_object
-        comment = instance
-        if comment.user != post.author:
-            notify_comment(post,comment)
 
 
 class Message(models.Model):
@@ -157,6 +139,33 @@ class SiteInfo(models.Model):
                                         default=default_image_folder()+"/site_contact_bg_default.png" )
     owner = models.ForeignKey(User,on_delete=models.CASCADE)
 
+@receiver(pre_save,sender=Post)
+def approve_update_signal(sender,instance,**kwargs):
+    '''Notify author that their post is approved when approved updated'''
+    if instance.pk and Post.objects.filter(pk=instance.pk).exists():
+        print("Approve update")
+        prev_instance = Post.objects.get(pk=instance.pk)
+        if prev_instance.approved != instance.approved and instance.approved:
+            notify_approval(instance)
+from fluent_comments.models import FluentComment
+@receiver(post_save,sender=FluentComment)
+def notify_comment_signal(sender,instance,created,**kwargs):
+    if created:
+        print("Comment was created")
+        '''Comment was created'''
+        post = instance.content_object
+        comment = instance
+        '''add owner permissions to commenter'''
+        add_owner_permission(instance,comment.user)
+        if comment.user != post.author:
+            notify_comment(post,comment)
+@receiver(post_save,sender=Message)
+def msg_created(sender,instance,created,**kwargs):
+    ''' Grant owner access of the message to the receiver of the message so that one can delete the message '''
+    if created:
+        print("Message was created")
+        add_owner_permission(instance,instance.to_user)
+
 
 # # assign group(and permission) to staff when a user becomes a staff
 # @receiver(post_save,sender=User)
@@ -174,14 +183,20 @@ class SiteInfo(models.Model):
 # # default permissions:add,change,delete,view
 # other permissions: pin, approve
 from guardian.shortcuts import assign_perm
-
-def add_owner_permission(obj:Post,user):
+from fluent_comments.models import FluentComment
+def add_owner_permission(obj,user):
     # assign the owner of the object change,delete,view permissions
     # assign_perm(f'change_{obj}',)
     print(f"Adding owner permissions to {user} for {obj}")
-    model_name = obj._meta.model_name
-    print("Table name:", model_name)
-    assign_perm(f'change_{model_name}',user,obj)
-    assign_perm(f'delete_{model_name}', user, obj)
-    assign_perm(f'view_{model_name}', user, obj)
+    name = obj._meta.verbose_name.lower()
+    app_label = obj._meta.app_label
+    print("App label:",app_label)
+    print("Model verbose name:", name)
+    perm_actions = [
+        'change','delete','view'
+    ]
+    for action in perm_actions:
+        perm = f'{app_label}.{action}_{name}'
+        print(perm)
+        assign_perm(perm,user,obj)
 

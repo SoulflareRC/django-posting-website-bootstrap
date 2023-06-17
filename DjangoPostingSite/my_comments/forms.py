@@ -44,7 +44,6 @@ class ModifiedCommentForm(CompactLabelsCommentForm):
     comment = forms.CharField(label=_('Comment'),
                               widget=forms.Textarea(attrs={"placeholder": 'Write something friendly...'}),
                               max_length=1000)
-
     @cached_property
     def helper(self):
         # Initialize on demand

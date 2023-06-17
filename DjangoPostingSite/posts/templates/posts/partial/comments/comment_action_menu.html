@@ -5,8 +5,7 @@
         <div class="dropdown-menu">
           {% if user == comment.user %}
             <a class="dropdown-item"
-
-                href="/blog/comments/delete/{{comment.id}}"><i class="bi bi-trash3"></i> Delete</a>
+                href="{% url 'posts:comment_delete' comment.id %}"><i class="bi bi-trash3"></i> Delete</a>
           {% endif %}
         </div>
 </div>

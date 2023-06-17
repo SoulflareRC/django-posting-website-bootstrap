@@ -10,7 +10,13 @@
               </div>
               <div class="col-10 d-flex flex-column position-relative ">
                   <div class="position-relative">
-
+                      {% with user=request.user %}
+                          {% if user.is_authenticated  and user == comment.user %}
+                              <div class="position-absolute end-0 top-0 text-sm-end z-3">
+                              {% include 'posts/partial/comments/comment_action_menu.html' with comment=comment user=user %}
+                               </div>
+                          {% endif %}
+                      {% endwith %}
                       <h4 class="w-100">
                        {% block comment_title %}
                           <a href="{ url 'posts:user' comment.user.id }" class="text-decoration-none">{% if comment.name %}{{ comment.name }}{% else %}{% trans "Anonymous" %} {% endif %}</a>

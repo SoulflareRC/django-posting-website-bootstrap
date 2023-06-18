@@ -37,6 +37,8 @@ python manage.py runserver
 
 **Authentication**: [django-allauth](https://github.com/pennersr/django-allauth) & [django-allauth-ui](https://github.com/danihodovic/django-allauth-ui)
 
+**Per object permissions**: [django-guardian](https://github.com/django-guardian/django-guardian)
+
 **Markdown Editor**: [django-markdown-editor](https://github.com/agusmakmun/django-markdown-editor)
 
 
@@ -49,6 +51,8 @@ python manage.py runserver
 ![image](demo/post-1.png)
 ![image](demo/post-2.png)
 **Supported actions**
+- Staff approval of posts (posts are defaulted to invisible until approved) 
+- Pinning post
 - Saving post
 - Editing post
 - Deleting post
@@ -59,6 +63,11 @@ python manage.py runserver
 - Makes creating and editing published post easier
 - Supports Markdown and uploading images 
 - Uses [tagify.js](https://github.com/yairEO/tagify) with auto-suggest for better tagging experience  
+
+### Messages
+![image](demo/inbox-1.png) 
+- Supports message with link
+- Automates notifications for post approval, approval request, comments on post, etc.
 
 ### Tags 
 ![image](demo/tags-1.png)
@@ -90,13 +99,20 @@ python manage.py runserver
 
 ### Comment 
 ![image](demo/comment-1.png)
-- Posts comment without reloading the page using django-fluent-comments
+- Posts comment without reloading the page using django-fluent-comments's ajax request feature
+- Displays comments more intuitively
+- Supports comment deletion without confirmation page 
 
 ### Admin Site
 ![image](demo/admin-1.png)
 - Enhanced admin site using django-simpleui
+- Managed general site settings with siteInfo objects  
 
 ### Login
 ![image](demo/login-1.png)
 - Supports signing up with email, signing in using username/email, and signing in using social accounts(skips regular sign up process, currently supporting Google and Github)
 - Mandates email verification 
+
+### Contact 
+![image](demo/contact-1.png)
+- Supports linking users' contact information

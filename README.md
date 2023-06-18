@@ -50,6 +50,7 @@ python manage.py runserver
 ### Post 
 ![image](demo/post-1.png)
 ![image](demo/post-2.png)
+
 **Supported actions**
 - Staff approval of posts (posts are defaulted to invisible until approved) 
 - Pinning post
@@ -57,6 +58,7 @@ python manage.py runserver
 - Editing post
 - Deleting post
 - Setting post as private
+- Sharing post to social media
 
 ### Post Editor
 ![image](demo/post-edit-1.png)

@@ -37,8 +37,6 @@ CSRF_TRUSTED_ORIGINS = ['https://f774-120-229-48-157.ngrok-free.app']
 INSTALLED_APPS = [
     "guardian", # per object permission
 
-    "daphne", # django channels
-
     "corsheaders", # cors headers
 
     "simpleui",  # admin simple ui

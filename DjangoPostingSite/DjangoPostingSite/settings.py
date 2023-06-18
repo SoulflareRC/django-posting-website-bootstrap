@@ -260,3 +260,16 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # django channels settings
 ASGI_APPLICATION = "DjangoPostingSite.asgi.application" # custom asgi app
+
+# simpleui settings
+SIMPLEUI_ICON = {
+    'Posts':'fa-sharp fa-solid fa-envelopes-bulk',
+    'User infos':'fa-solid fa-address-card',
+    'Site infos':"fa-solid fa-circle-info",
+    'Messages':"fa-regular fa-message",
+    "Email addresses":"fa-solid fa-at",
+    'Sites':'fa-solid fa-bars',
+    'Social accounts':'fa-solid fa-hashtag',
+    'Social Accounts':'fa-solid fa-hashtag',
+    'Accounts':'fa-regular fa-user',
+}

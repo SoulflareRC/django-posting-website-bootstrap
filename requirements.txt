@@ -19,3 +19,4 @@ Pillow==9.5.0
 python-dotenv==1.0.0
 django-cors-headers
 django-guardian
+whhitenoise

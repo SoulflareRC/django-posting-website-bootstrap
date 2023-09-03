@@ -1,0 +1,20 @@
+version: "3"
+services:
+    django:
+        build: . #build from this dir
+        working_dir: /app 
+        ports:
+            - 127.0.0.1:8000:8000
+        command: gunicorn DjangoPostingSite.wsgi:application --bind 0.0.0.0:8000
+        volumes: 
+            - ./db.sqlite3:/app/db.sqlite3 
+    nginx: 
+        image: nginx:latest 
+        ports: 
+            - "80:80" 
+        volumes: 
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+        depends_on:
+            - django 
+            
+        

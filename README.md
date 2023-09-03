@@ -17,7 +17,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 ### Install with Docker 
-Use Docker and Docker Compose to deploy the app 👇
+Use Docker and Docker Compose to deploy the app (make sure you have them installed first)👇
 ```
 git clone https://github.com/SoulflareRC/django-posting-website-bootstrap.git
 

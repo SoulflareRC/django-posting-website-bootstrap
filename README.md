@@ -2,6 +2,7 @@
 A post-based forum website based on Django+Bootstrap. 
 ![image](demo/demo.png)
 ## Install
+### Install Locally
 ```
 git clone https://github.com/SoulflareRC/django-posting-website-bootstrap.git
 
@@ -15,8 +16,21 @@ python manage.py migrate
 
 python manage.py runserver
 ```
+### Install with Docker 
+Use Docker and Docker Compose to deploy the app 👇
+```
+git clone https://github.com/SoulflareRC/django-posting-website-bootstrap.git
+
+cd django-posting-website-bootstrap
+
+cd DjangoPostingSite
+
+docker compose up
+```
 
 ## Technical Details
+**Deployment**: Docker+Nginx+Gunicorn+Django+SQLite3
+
 **Frontend**: [bootstrap 5.3](https://getbootstrap.com/)
 
 **Backend**：[Django 4.2.1](https://www.djangoproject.com/)

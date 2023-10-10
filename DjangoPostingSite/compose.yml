@@ -9,7 +9,7 @@ services:
           - .:/app
           - static-volume:/app/static
           - media-volume:/app/media 
-        command: sh -c "python manage.py makemigrations posts && python manage.py migrate && python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic && gunicorn DjangoPostingSite.wsgi:application --bind 0.0.0.0:8000"
+        command: sh -c "python manage.py makemigrations posts && python manage.py migrate && python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic -c && gunicorn DjangoPostingSite.wsgi:application --bind 0.0.0.0:8000"
         networks:
           - web_network
     nginx: 

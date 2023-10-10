@@ -38,7 +38,7 @@ class Post(models.Model):
     title = models.CharField(max_length=50)
     author = models.ForeignKey(User,on_delete=models.CASCADE,default=1)
     cover = models.ImageField(blank=False,null=False,
-                              upload_to= 'covers',
+                              upload_to= 'covers/',
                               default= default_image_folder()+"/post_cover_default.png"
                               )
     content = MartorField()
@@ -118,10 +118,12 @@ class UserInfo(models.Model):
     display_name = models.CharField(max_length=50,blank=False,null=False,default="None")
     slogan = models.CharField(max_length=200,blank=True)
     icon = models.ImageField(max_length=500, blank=True,
-                             upload_to=settings.MEDIA_ROOT / 'user' / 'icon',
+                             # upload_to=settings.MEDIA_ROOT / 'user' / 'icon',
+                             upload_to='user/icon',
                              default='icon_default.png')
     profile_bg = models.ImageField(max_length=500, blank=True,
-                                   upload_to=settings.MEDIA_ROOT / 'user' / 'profile_background',
+                                   # upload_to=settings.MEDIA_ROOT / 'user' / 'profile_background',
+                                   upload_to='user/profile_background',
                                    default=default_image_folder()+"/profile_bg_default.png")
 
     linkedin_link = models.URLField(blank=True,null=True)

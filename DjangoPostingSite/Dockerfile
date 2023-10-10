@@ -1,4 +1,5 @@
-FROM python:3.10.7-alpine
+FROM python:3.10-slim-bullseye
+
 # Set environment variables
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE DjangoPostingSite.settings

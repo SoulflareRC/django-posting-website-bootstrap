@@ -172,7 +172,7 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder", # for finding static files in app folders
 ]
-MEDIA_ROOT = BASE_DIR / 'uploads' # the name of the media folder
+MEDIA_ROOT = BASE_DIR / 'media' # the name of the media folder
 MEDIA_URL = "/media/" # the base url for media files
 DEFAULT_IMAGE_FOLDER = MEDIA_ROOT / "default"
 # Default primary key field type

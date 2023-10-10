@@ -37,9 +37,8 @@ class Post(models.Model):
     post_id = models.UUIDField(default=uuid.uuid4,editable=False)
     title = models.CharField(max_length=50)
     author = models.ForeignKey(User,on_delete=models.CASCADE,default=1)
-    # cover_default_dir = Path(settings.MEDIA_ROOT / 'covers' / 'defaults')
     cover = models.ImageField(blank=False,null=False,
-                              upload_to= settings.MEDIA_ROOT / 'covers',
+                              upload_to= 'covers',
                               default= default_image_folder()+"/post_cover_default.png"
                               )
     content = MartorField()

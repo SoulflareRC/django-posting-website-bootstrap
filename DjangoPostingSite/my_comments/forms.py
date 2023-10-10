@@ -1,22 +1,10 @@
 
-from django import forms
 from django_comments.forms import CommentForm,CommentDetailsForm,CommentSecurityForm,get_model
-from .models import CommentWithTitle
 from django import forms
-from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
-from django.forms.utils import ErrorDict
-from django.utils.crypto import salted_hmac, constant_time_compare
-from django.utils.encoding import force_str
-from django.utils.text import get_text_list
-from django.utils import timezone
 from django.utils.translation import pgettext_lazy, ngettext, gettext, gettext_lazy as _
 from fluent_comments.forms.compact import CompactLabelsCommentForm
-from fluent_comments.forms import DefaultCommentForm
 from crispy_forms.layout import Column, Layout, Row
 from django.utils.functional import cached_property
-
-from fluent_comments import appsettings
 from fluent_comments.forms.base import AbstractCommentForm, PreviewButton, SubmitButton
 from fluent_comments.forms.helper import CompactLabelsCommentFormHelper
 
